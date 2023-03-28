@@ -1,3 +1,6 @@
+
+$margin_main: 7%;
+
 .main{
     width: 100%;
     height: 100%;
@@ -6,5 +9,14 @@
 .main__block{
     width: 100%;
     height: 100%;
-    background-color: #22242A;
+    background-color: #151619;
+}
+
+.main__header{
+    font-size: 32px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    margin-left: $margin_main;
+    margin-bottom: 50px;
+    padding-top: 55px;
 }

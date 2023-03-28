@@ -29,7 +29,7 @@ export default function Main() {
     return (        
         <div className='main'>
             <div className='main__block'>
-                <div className='main__header'></div>
+                <div className='main__header'>SpaceX Ships</div>
                 <div className='main__cards'>
                     <CardList cards={cards}/>
                     {/* <button onClick={(e: any) => CardPostService.getAll()} style={{width:'300px', height:'300px', color:'red'}}></button> */}
