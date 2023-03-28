@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export default class CardPostService {
-    static async getAll(limit=15, shipType='', offset=0) {
+    static async getWithParam(limit, shipType='', offset=0) {
         const response = await axios.get('https://api.spacexdata.com/v3/ships', {
             params: {
                 limit: limit,
@@ -10,8 +10,13 @@ export default class CardPostService {
             }
         
         })
-        // console.log(response.data)
 
         return response
     }
+
+    static async getAll(){
+        const response = await axios.get('https://api.spacexdata.com/v3/ships')
+        return response
+    }
+
 }
