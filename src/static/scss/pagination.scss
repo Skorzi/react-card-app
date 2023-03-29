@@ -1,0 +1,25 @@
+
+$margin_main: 7%;
+
+.pages{
+    margin-left: $margin_main;
+    margin-top: 20px;
+}
+
+.pages__block{
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+}
+
+.pages__num{
+    font-size: 18px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+.pages__left_arrow, .pages__right_arrow{
+    background-color: #151619;
+    color: white;
+}
+
+

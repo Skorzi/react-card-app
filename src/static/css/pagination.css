@@ -1,0 +1,25 @@
+.pages {
+  margin-left: 7%;
+  margin-top: 20px;
+}
+
+.pages__block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 80px;
+}
+
+.pages__num {
+  font-size: 18px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.pages__left_arrow, .pages__right_arrow {
+  background-color: #151619;
+  color: white;
+}

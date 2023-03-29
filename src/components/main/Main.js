@@ -6,36 +6,58 @@ import { InfinitySpin } from 'react-loader-spinner'
 import '../../static/css/main.css'
 import CardList from './CardList'
 import { getCountOfPages } from '../../utils/countPages'
+import Pagination from '../pagination/Pagination'
 
 export default function Main() {
 
     const [cards, setCards] = useState([])
     const [limit, setLimit] = useState(5)
     const [page, setPage] = useState(1)
-    // const [totalShips, setTotalShips] = useState([])
+    const [offset, setOffset] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
 
+    //Логика по запросу карточек и их вывода, счету общего количества страниц
     const [requestCards, isCardLoading, errorReqCard] = useFetching(async () => {
-        const response = await CardPostService.getWithParam(limit)
-        setCards([...cards, ...response.data])
-        const response_all = await CardPostService.getWithParam()
-        const totalShips = response_all.data.length
-        setTotalPages(getCountOfPages(totalShips, limit))
-        // const allShipCount = 
+        const response = await CardPostService.getWithParam(limit, offset)
+        // setCards([...cards, ...response.data])
+        setCards([...response.data])
+
     })
 
-    
+    const [requestCards_all, isCardLoading_all, errorReqCard_all] = useFetching(async () => {
+        const response_all = await CardPostService.getAll()
+        const totalShips = response_all.data.length
+        setTotalPages(getCountOfPages(totalShips, limit))
+    })
 
+
+    //Для того, чтобы не пересчитывать по 10 раз количество страниц, вынес в отдельный useEffect
+    useEffect(() => {
+        requestCards_all()
+    }, [])
+
+    // На изменение страницы добываем новые данные
     useEffect(() => {
         requestCards()
     }, [page, limit])
 
-    useEffect(() => {
-        console.log(totalPages)
-    }, [totalPages])
+    // При каждой смене страницы - добавляем оффсет для работы с api
+    function nextPage(page){
+        if(page >= totalPages){
+            setPage(totalPages)
+        }else{
+            setOffset(offset+5)
+            setPage(page+1)
+        }
+    }
 
-    const changePage = (page) => {
-        setPage(page)
+    function prevPage(page){
+        if(page <= 1){
+            setPage(1)
+        }else{
+            setOffset(offset-5)
+            setPage(page-1)
+        }
     }
 
     return (        
@@ -45,10 +67,11 @@ export default function Main() {
                 <div className='main__cards'>
                     <CardList cards={cards}/>
                 </div>
+                {/* На случай долгой загрузки данных выводим loader */}
                 {isCardLoading && 
                     <div style={{display: 'flex', justifyContent: 'center'}}><InfinitySpin color='#818698'/></div>
                 }
-
+                <Pagination totalPages={totalPages} page={page} nextPage={nextPage} prevPage={prevPage}/>
             </div>
         </div>
     )
