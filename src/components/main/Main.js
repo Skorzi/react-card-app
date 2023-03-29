@@ -7,6 +7,7 @@ import '../../static/css/main.css'
 import CardList from './CardList'
 import { getCountOfPages } from '../../utils/countPages'
 import Pagination from '../pagination/Pagination'
+import Filter from '../filter/Filter'
 
 export default function Main() {
 
@@ -15,6 +16,7 @@ export default function Main() {
     const [page, setPage] = useState(1)
     const [offset, setOffset] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
+    const [filter, setFilter] = useState({sort: '', query: ''})
 
     //Логика по запросу карточек и их вывода, счету общего количества страниц
     const [requestCards, isCardLoading, errorReqCard] = useFetching(async () => {
@@ -72,6 +74,9 @@ export default function Main() {
                     <div style={{display: 'flex', justifyContent: 'center'}}><InfinitySpin color='#818698'/></div>
                 }
                 <Pagination totalPages={totalPages} page={page} nextPage={nextPage} prevPage={prevPage}/>
+            </div>
+            <div className='main__filter'>
+                <Filter/>
             </div>
         </div>
     )

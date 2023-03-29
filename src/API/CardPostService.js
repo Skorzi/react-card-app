@@ -18,5 +18,5 @@ export default class CardPostService {
         console.log(response)
         return response
     }
-
+    //Для входа на карточку надо получать один объект
 }
