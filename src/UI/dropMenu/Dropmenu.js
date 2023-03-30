@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import {grey} from '@mui/material/colors';
 import '../../static/css/dropdown.css'
-import { BsCheck } from 'react-icons/bs';
 
-export default function Dropmenu({options}) {
-    const [choisenArr, setChoisenArr] = useState([])
+export default function Dropmenu({options, choisenArr, setChoisenArr}) {
     const [countChoice, setCountChoice] = useState(0)
     let filterArray = []
-
 
     function addOrRemoveOption(e){
         if(e.checked){
@@ -21,10 +16,6 @@ export default function Dropmenu({options}) {
         }
     }
 
-    useEffect(() => {
-        console.log(choisenArr)
-    }, [choisenArr])
-
     return (
         <div className='dropdown'>
             <div className='dropdown__input'>Выбрано {countChoice}</div>
@@ -32,7 +23,7 @@ export default function Dropmenu({options}) {
                 {options.map(option =>
                     <div key={option.value} className='dropdown__option'>
                         <input type="checkbox" id={option.value} name={option.name} onChange={e => addOrRemoveOption(e.target)}/>
-                        <label className='dropdown__name' for={option.value}>{option.name}</label>
+                        <label className='dropdown__name' htmlFor={option.value}>{option.name}</label>
                     </div>
                 )}
             </div>

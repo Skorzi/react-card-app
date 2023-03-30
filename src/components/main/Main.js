@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import CardPostService from '../../API/CardPostService'
 import { useFetching } from '../../hooks/useFetching'
 import { InfinitySpin } from 'react-loader-spinner'
-
 import '../../static/css/main.css'
 import CardList from './CardList'
 import { getCountOfPages } from '../../utils/countPages'
 import Pagination from '../pagination/Pagination'
 import Filter from '../filter/Filter'
+import useCards from '../../hooks/useCards'
 
 export default function Main() {
 
@@ -16,7 +16,8 @@ export default function Main() {
     const [page, setPage] = useState(1)
     const [offset, setOffset] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
-    const [filter, setFilter] = useState({sort: '', query: ''})
+    const [filter, setFilter] = useState({sortType: '', sortPort: [], query: ''})
+    const sortedAndSearchedCards = useCards(cards, filter.sortType, filter.sortPort, filter.query)
 
     //Логика по запросу карточек и их вывода, счету общего количества страниц
     const [requestCards, isCardLoading, errorReqCard] = useFetching(async () => {
@@ -32,7 +33,9 @@ export default function Main() {
         setTotalPages(getCountOfPages(totalShips, limit))
     })
 
-
+    useEffect(() => {
+        console.log(filter)
+    }, [filter])
     //Для того, чтобы не пересчитывать по 10 раз количество страниц, вынес в отдельный useEffect
     useEffect(() => {
         requestCards_all()
@@ -67,16 +70,17 @@ export default function Main() {
             <div className='main__block'>
                 <div className='main__header'>SpaceX Ships</div>
                 <div className='main__cards'>
-                    <CardList cards={cards}/>
-                </div>
                 {/* На случай долгой загрузки данных выводим loader */}
-                {isCardLoading && 
-                    <div style={{display: 'flex', justifyContent: 'center'}}><InfinitySpin color='#818698'/></div>
-                }
+                    {isCardLoading
+                        ? <div style={{display: 'flex', justifyContent: 'center'}}><InfinitySpin color='#818698'/></div>
+                        : <CardList cards={sortedAndSearchedCards}/>
+                    }
+                    {errorReqCard && <div>{errorReqCard}</div>}
+                </div>
                 <Pagination totalPages={totalPages} page={page} nextPage={nextPage} prevPage={prevPage}/>
             </div>
             <div className='main__filter'>
-                <Filter/>
+                <Filter filter={filter} setFilter={setFilter}/>
             </div>
         </div>
     )
