@@ -12,18 +12,54 @@
 }
 
 .dropdown__menu {
-  position: absolute;
   height: 200px;
   width: 100%;
   background-color: #393C46;
 }
 
+.dropdown__menu input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
 .dropdown__option {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   color: white;
+  margin-bottom: 20px;
+}
+
+.dropdown__name {
+  height: 25px;
+  width: 25px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  padding-left: 20px;
+}
+
+label::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background-color: none;
+  vertical-align: middle;
+  margin-right: 7px;
+  border-radius: 2px;
+  border: 2px solid #818698;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: white;
+  border-color: white;
+  background-image: url("../../media/icon/done.png");
+  background-size: 100%;
 }
