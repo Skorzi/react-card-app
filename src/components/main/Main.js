@@ -11,31 +11,36 @@ import useCards from '../../hooks/useCards'
 
 export default function Main() {
 
+    // проблема - фильтр ищет среди 5-ти элементов, за место всех
+
     const [cards, setCards] = useState([])
     const [limit, setLimit] = useState(5)
+    const [allCards, setAllCards] = useState([])
     const [page, setPage] = useState(1)
     const [offset, setOffset] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
     const [filter, setFilter] = useState({sortType: '', sortPort: [], query: ''})
-    const sortedAndSearchedCards = useCards(cards, filter.sortType, filter.sortPort, filter.query)
+    const sortedAndSearchedCards = useCards(cards, filter.sortType, filter.sortPort, filter.query, allCards)
 
     //Логика по запросу карточек и их вывода, счету общего количества страниц
     const [requestCards, isCardLoading, errorReqCard] = useFetching(async () => {
         const response = await CardPostService.getWithParam(limit, offset)
-        // setCards([...cards, ...response.data])
         setCards([...response.data])
-
     })
 
     const [requestCards_all, isCardLoading_all, errorReqCard_all] = useFetching(async () => {
         const response_all = await CardPostService.getAll()
         const totalShips = response_all.data.length
+        // console.log(response_all.data)
         setTotalPages(getCountOfPages(totalShips, limit))
+        setAllCards([...response_all.data])
     })
 
-    useEffect(() => {
-        console.log(filter)
-    }, [filter])
+    // useEffect(() =>{
+    //     console.log(allCards)
+    // }, [allCards])
+
+
     //Для того, чтобы не пересчитывать по 10 раз количество страниц, вынес в отдельный useEffect
     useEffect(() => {
         requestCards_all()

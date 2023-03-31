@@ -1,16 +1,22 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useFetching } from '../hooks/useFetching'
+import CardPostService from '../API/CardPostService'
+
+
 
 function useSortedCards(cards, sortType, sortPort){
+
     const sortedCards = useMemo(() => {
         if(sortType){
-            return [...cards].sort((a, b) => a[sortType].localeCompare(b[sortType]))
+            //логика по работе фильтра
+            console.log(cards)
+            return[...cards]
         }else{
             return cards
         }}, [sortType, cards])
 
     return sortedCards;
 }
-
 export default function useCards(cards, sortType, sortPort, query){
     const sortedCards = useSortedCards(cards, sortType, sortPort)
 

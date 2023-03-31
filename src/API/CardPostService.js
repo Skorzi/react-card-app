@@ -15,7 +15,7 @@ export default class CardPostService {
 
     static async getAll(){
         const response = await axios.get('https://api.spacexdata.com/v3/ships')
-        console.log(response)
+        // console.log(response)
         return response
     }
     //Для входа на карточку надо получать один объект

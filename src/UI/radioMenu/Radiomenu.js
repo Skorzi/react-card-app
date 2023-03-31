@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import '../../static/css/radiomenu.css'
 export default function Radiomenu({ options, onChange }) {
-
     return (
         <div className='radio'>
             <div className='radio__block'>

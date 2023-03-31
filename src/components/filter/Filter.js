@@ -6,7 +6,7 @@ import Radiomenu from '../../UI/radioMenu/Radiomenu'
 
 export default function Filter({filter, setFilter}) {
     const [choisenArr, setChoisenArr] = useState([])
-    
+
     useEffect(() => {
         setFilter({...filter, sortPort: choisenArr})
     }, [choisenArr])
